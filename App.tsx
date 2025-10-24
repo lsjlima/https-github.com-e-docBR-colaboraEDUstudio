@@ -17,19 +17,48 @@ import { BibliotecarioDashboard } from './components/dashboard/bibliotecario/Bib
 import { ResponsavelDashboard } from './components/dashboard/responsavel/ResponsavelDashboard';
 import { ForgotPasswordSuccessMessage } from './components/ForgotPasswordSuccessMessage';
 
-const Logo = () => (
-  <div className="flex items-center justify-center space-x-4">
-    <svg width="60" height="60" viewBox="0 0 100 100" className="flex-shrink-0">
-      <path d="M0 20 L40 20 L40 0 L60 0 L60 60 L100 60 L100 80 L0 80 Z" fill="#3B82F6" />
-      <path d="M40 40 L40 60 L20 60 L20 40 Z" fill="#10B981" />
-      <rect x="85" y="5" width="10" height="10" fill="#FBBF24" />
-      <rect x="85" y="85" width="10" height="10" fill="#FBBF24" />
+// New Logo Component
+const Logo = ({ className }: { className?: string }) => (
+  <div className={`flex items-center space-x-2 ${className}`}>
+    <svg
+      className="h-8 w-8 text-slate-900"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M12 2L2 7V17L12 22L22 17V7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M2 7L12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M12 22V12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M22 7L12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M17 4.5L7 9.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
-    <div className="text-left">
-      <span className="text-4xl font-bold text-gray-800 tracking-tight">colabora</span>
-      <span className="text-4xl font-bold text-blue-600 tracking-tight">EDU</span>
-    </div>
+    <span className="text-2xl font-bold text-slate-900 tracking-tighter">colaboraEDU</span>
   </div>
+);
+
+// New Animated Text Component (Magic UI inspired)
+const AnimatedShinyText = ({ children, className }: { children: React.ReactNode, className?: string }) => (
+  <div className={`inline-flex animate-background-shine items-center justify-center rounded-lg border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 py-2 text-slate-400 transition-colors ${className}`}>
+    {children}
+  </div>
+);
+
+// New Footer Component
+const Footer = () => (
+  <footer className="w-full mt-24 border-t border-slate-200 py-8">
+    <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-y-4">
+      <Logo />
+      <div className="flex flex-wrap justify-center md:justify-start gap-x-6 gap-y-2 text-sm text-slate-600">
+        <a href="#" className="hover:text-slate-900 transition-colors">Termos de Serviço</a>
+        <a href="#" className="hover:text-slate-900 transition-colors">Política de Privacidade</a>
+        <a href="#" className="hover:text-slate-900 transition-colors">Sobre Nós</a>
+        <a href="#" className="hover:text-slate-900 transition-colors">Contato</a>
+      </div>
+      <p className="text-sm text-slate-500">
+        &copy; {new Date().getFullYear()} colaboraEDU. Todos os direitos reservados.
+      </p>
+    </div>
+  </footer>
 );
 
 const App: React.FC = () => {
@@ -118,34 +147,36 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-white to-blue-100 font-sans text-gray-700">
-      <main className="container mx-auto px-4 py-12 md:py-20">
-        <header className="text-center mb-12">
-          <div className="inline-block mb-6">
-            <Logo />
-          </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 tracking-tight">
-            Bem-vindo ao colabora<span className="text-blue-600">EDU</span>
-          </h1>
-          <p className="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-500">
-            Sistema Educacional Colaborativo - Uma plataforma integrada para gestão educacional, conectando toda a comunidade escolar em um ambiente digital colaborativo.
-          </p>
-        </header>
+    <div className="min-h-screen bg-white font-sans text-slate-800 antialiased">
+      <main className="flex flex-col items-center justify-between min-h-screen">
+          <div className="w-full flex-grow flex flex-col items-center justify-center py-12 md:py-20 px-4">
+            <header className="text-center mb-12 md:mb-16">
+              <div className="inline-block mb-8">
+                <Logo />
+              </div>
+              <AnimatedShinyText className="text-4xl md:text-5xl font-extrabold tracking-tight">
+                 Bem-vindo ao colaboraEDU
+              </AnimatedShinyText>
+              <p className="mt-6 text-base md:text-lg max-w-2xl mx-auto text-slate-600">
+                Uma plataforma integrada para gestão educacional, conectando toda a comunidade escolar em um ambiente digital colaborativo.
+              </p>
+            </header>
 
-        <section id="profile-selection" className="p-8 bg-white/60 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200">
-          <h2 className="text-2xl font-bold text-center mb-2">Selecione seu perfil de acesso</h2>
-          <p className="text-center text-gray-500 mb-8">Escolha o tipo de usuário para acessar as funcionalidades específicas do seu perfil.</p>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {PROFILES.map(profile => (
-              <ProfileCard 
-                key={profile.id} 
-                profile={profile} 
-                onSelect={handleProfileSelect}
-              />
-            ))}
-          </div>
-        </section>
+            <section id="profile-selection" className="w-full max-w-6xl p-8 bg-white rounded-2xl shadow-lg border border-slate-200">
+              <h2 className="text-2xl font-bold text-center text-slate-900 mb-2">Selecione seu perfil de acesso</h2>
+              <p className="text-center text-slate-500 mb-8">Escolha o tipo de usuário para acessar as funcionalidades específicas do seu perfil.</p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {PROFILES.map(profile => (
+                  <ProfileCard 
+                    key={profile.id} 
+                    profile={profile} 
+                    onSelect={handleProfileSelect}
+                  />
+                ))}
+              </div>
+            </section>
+         </div>
 
         {selectedProfile && (
           <Modal isOpen={!!selectedProfile} onClose={closeModal}>
@@ -169,14 +200,19 @@ const App: React.FC = () => {
             )}
           </Modal>
         )}
+        
+        <Footer />
 
-        <footer className="mt-16 text-center p-8 bg-white/60 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200">
-          <h3 className="text-2xl font-bold mb-4">Sobre o colaboraEDU</h3>
-          <p className="max-w-4xl mx-auto text-gray-600">
-            O colaboraEDU é uma plataforma educacional completa que integra todos os setores da instituição de ensino. Com interfaces adaptadas para cada tipo de usuário, nosso sistema facilita a comunicação, otimiza processos administrativos e pedagógicos, e promove um ambiente de aprendizado mais eficiente e colaborativo.
-          </p>
-        </footer>
       </main>
+       <style>{`
+            @keyframes background-shine {
+              from { background-position: 0 0; }
+              to { background-position: -200% 0; }
+            }
+            .animate-background-shine {
+              animation: background-shine 2s linear infinite;
+            }
+          `}</style>
     </div>
   );
 };
