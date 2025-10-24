@@ -12,5 +12,6 @@ export interface UserProfile {
     ring: string;
     button: string;
     buttonHover: string;
+    focusBorder: string;
   };
 }

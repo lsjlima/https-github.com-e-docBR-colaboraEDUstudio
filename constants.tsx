@@ -18,7 +18,8 @@ export const PROFILES: UserProfile[] = [
       text: 'text-teal-600',
       ring: 'ring-teal-500',
       button: 'bg-teal-500',
-      buttonHover: 'hover:bg-teal-600'
+      buttonHover: 'hover:bg-teal-600',
+      focusBorder: 'focus:border-teal-500'
     }
   },
   {
@@ -35,7 +36,8 @@ export const PROFILES: UserProfile[] = [
       text: 'text-green-600',
       ring: 'ring-green-500',
       button: 'bg-green-500',
-      buttonHover: 'hover:bg-green-600'
+      buttonHover: 'hover:bg-green-600',
+      focusBorder: 'focus:border-green-500'
     }
   },
   {
@@ -52,7 +54,8 @@ export const PROFILES: UserProfile[] = [
       text: 'text-blue-600',
       ring: 'ring-blue-500',
       button: 'bg-blue-500',
-      buttonHover: 'hover:bg-blue-600'
+      buttonHover: 'hover:bg-blue-600',
+      focusBorder: 'focus:border-blue-500'
     }
   },
   {
@@ -69,7 +72,8 @@ export const PROFILES: UserProfile[] = [
       text: 'text-orange-600',
       ring: 'ring-orange-500',
       button: 'bg-orange-500',
-      buttonHover: 'hover:bg-orange-600'
+      buttonHover: 'hover:bg-orange-600',
+      focusBorder: 'focus:border-orange-500'
     }
   },
   {
@@ -86,7 +90,8 @@ export const PROFILES: UserProfile[] = [
       text: 'text-red-600',
       ring: 'ring-red-500',
       button: 'bg-red-500',
-      buttonHover: 'hover:bg-red-600'
+      buttonHover: 'hover:bg-red-600',
+      focusBorder: 'focus:border-red-500'
     }
   },
   {
@@ -103,7 +108,8 @@ export const PROFILES: UserProfile[] = [
       text: 'text-purple-600',
       ring: 'ring-purple-500',
       button: 'bg-purple-500',
-      buttonHover: 'hover:bg-purple-600'
+      buttonHover: 'hover:bg-purple-600',
+      focusBorder: 'focus:border-purple-500'
     }
   },
   {
@@ -120,7 +126,8 @@ export const PROFILES: UserProfile[] = [
       text: 'text-indigo-600',
       ring: 'ring-indigo-500',
       button: 'bg-indigo-500',
-      buttonHover: 'hover:bg-indigo-600'
+      buttonHover: 'hover:bg-indigo-600',
+      focusBorder: 'focus:border-indigo-500'
     }
   },
   {
@@ -137,7 +144,8 @@ export const PROFILES: UserProfile[] = [
       text: 'text-cyan-600',
       ring: 'ring-cyan-500',
       button: 'bg-cyan-500',
-      buttonHover: 'hover:bg-cyan-600'
+      buttonHover: 'hover:bg-cyan-600',
+      focusBorder: 'focus:border-cyan-500'
     }
   }
 ];

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { UserProfile } from './types';
 import { PROFILES } from './constants';
 import { ProfileCard } from './components/ProfileCard';
@@ -15,6 +15,7 @@ import { SecretarioDashboard } from './components/dashboard/secretario/Secretari
 import { OrientadorDashboard } from './components/dashboard/orientador/OrientadorDashboard';
 import { BibliotecarioDashboard } from './components/dashboard/bibliotecario/BibliotecarioDashboard';
 import { ResponsavelDashboard } from './components/dashboard/responsavel/ResponsavelDashboard';
+import { ForgotPasswordSuccessMessage } from './components/ForgotPasswordSuccessMessage';
 
 const Logo = () => (
   <div className="flex items-center justify-center space-x-4">
@@ -33,9 +34,19 @@ const Logo = () => (
 
 const App: React.FC = () => {
   const [selectedProfile, setSelectedProfile] = useState<UserProfile | null>(null);
-  const [modalView, setModalView] = useState<'login' | 'forgotPassword'>('login');
+  const [modalView, setModalView] = useState<'login' | 'forgotPassword' | 'forgotPasswordSuccess'>('login');
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [loggedInProfile, setLoggedInProfile] = useState<UserProfile | null>(null);
+
+  useEffect(() => {
+    if (modalView === 'forgotPasswordSuccess') {
+      const timer = setTimeout(() => {
+        setModalView('login');
+      }, 4000); // Go back to login after 4 seconds
+
+      return () => clearTimeout(timer); // Cleanup timer
+    }
+  }, [modalView]);
 
   const handleProfileSelect = (profile: UserProfile) => {
     setSelectedProfile(profile);
@@ -68,8 +79,9 @@ const App: React.FC = () => {
 
   const handleForgotPasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`Link de recuperação de senha enviado para o email fornecido para o perfil ${selectedProfile?.name}. (funcionalidade de demonstração)`);
-    setModalView('login');
+    // In a real app, you would get the email from the form and send a request to your backend.
+    // For this demo, we'll just show the success message.
+    setModalView('forgotPasswordSuccess');
   }
 
   const closeModal = () => {
@@ -143,10 +155,15 @@ const App: React.FC = () => {
                 onLogin={handleLogin}
                 onShowForgotPassword={() => setModalView('forgotPassword')}
               />
-            ) : (
+            ) : modalView === 'forgotPassword' ? (
               <ForgotPasswordForm
                 profile={selectedProfile}
                 onSubmit={handleForgotPasswordSubmit}
+                onBackToLogin={() => setModalView('login')}
+              />
+            ) : (
+              <ForgotPasswordSuccessMessage
+                profile={selectedProfile}
                 onBackToLogin={() => setModalView('login')}
               />
             )}

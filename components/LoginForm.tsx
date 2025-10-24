@@ -8,22 +8,35 @@ interface LoginFormProps {
   onShowForgotPassword: () => void;
 }
 
+const REMEMBER_ME_KEY = 'colaboraEDU_remembered_email';
+
 export const LoginForm: React.FC<LoginFormProps> = ({ profile, onLogin, onShowForgotPassword }) => {
   const { name, icon, colorClasses } = profile;
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // Pre-fill email for demo purposes and reset form on profile change
-    const profileId = profile.id as keyof typeof mockCredentials;
-    if (mockCredentials[profileId]) {
-      setEmail(mockCredentials[profileId].email);
+    // Check for a remembered email in localStorage
+    const rememberedEmail = localStorage.getItem(REMEMBER_ME_KEY);
+    if (rememberedEmail) {
+      setEmail(rememberedEmail);
+      setRememberMe(true);
     } else {
-      setEmail('');
+      // Pre-fill email for demo purposes if not remembered
+      const profileId = profile.id as keyof typeof mockCredentials;
+      if (mockCredentials[profileId]) {
+        setEmail(mockCredentials[profileId].email);
+      } else {
+        setEmail('');
+      }
+      setRememberMe(false);
     }
+    
+    // Reset other form fields
     setPassword('');
     setError(null);
     setIsLoading(false);
@@ -35,6 +48,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({ profile, onLogin, onShowFo
     setIsLoading(true);
     try {
       await onLogin(email, password);
+      // On successful login, handle 'Remember Me' preference
+      if (rememberMe) {
+        localStorage.setItem(REMEMBER_ME_KEY, email);
+      } else {
+        localStorage.removeItem(REMEMBER_ME_KEY);
+      }
       // Success is handled by the parent component re-rendering
     } catch (err) {
       setError((err as Error).message);
@@ -42,6 +61,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({ profile, onLogin, onShowFo
       setIsLoading(false);
     }
   };
+
+  const inputClass = error
+    ? `block w-full px-3 py-2 border border-red-500 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 ring-red-500 focus:border-red-500 sm:text-sm`
+    : `block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 ${colorClasses.ring} ${colorClasses.focusBorder} sm:text-sm`;
 
   return (
     <div className="p-8 pt-10">
@@ -74,7 +97,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ profile, onLogin, onShowFo
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={`block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 ${colorClasses.ring} sm:text-sm`}
+              className={inputClass}
               placeholder="seu.email@exemplo.com"
             />
           </div>
@@ -93,7 +116,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ profile, onLogin, onShowFo
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={`block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 ${colorClasses.ring} sm:text-sm`}
+              className={inputClass}
               placeholder="********"
             />
           </div>
@@ -105,6 +128,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ profile, onLogin, onShowFo
               id="remember-me"
               name="remember-me"
               type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
               className={`h-4 w-4 text-white ${colorClasses.button} focus:ring-transparent border-gray-300 rounded`}
               style={{ accentColor: 'currentColor' }}
             />
