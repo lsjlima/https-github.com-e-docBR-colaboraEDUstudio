@@ -4,6 +4,7 @@ import { Header } from '../Header';
 import { SecretarioSidebar } from './SecretarioSidebar';
 import { SecretarioHome } from './SecretarioHome';
 import { GerenciarDocumentos } from './GerenciarDocumentos';
+import { ChatDashboard } from '../chat/ChatDashboard';
 
 interface SecretarioDashboardProps {
   profile: UserProfile;
@@ -14,7 +15,7 @@ export type SecretarioView =
   | 'matriculas'
   | 'documentos'
   | 'certificados'
-  | 'comunicacoes'
+  | 'chat'
   | 'relatorios'
   | 'arquivo'
   | 'meuPerfil';
@@ -23,7 +24,7 @@ const viewTitles: Record<SecretarioView, string> = {
   matriculas: 'Matrículas',
   documentos: 'Gerenciar Documentos',
   certificados: 'Certificados',
-  comunicacoes: 'Comunicações',
+  chat: 'Comunicação',
   relatorios: 'Relatórios',
   arquivo: 'Arquivo Morto',
   meuPerfil: 'Meu Perfil',
@@ -38,6 +39,8 @@ export const SecretarioDashboard: React.FC<SecretarioDashboardProps> = ({ profil
         return <SecretarioHome />;
       case 'documentos':
         return <GerenciarDocumentos />;
+      case 'chat':
+        return <ChatDashboard currentUserProfile={profile} />;
       default:
         return (
           <div className="p-8 bg-white rounded-lg shadow animate-fade-in">

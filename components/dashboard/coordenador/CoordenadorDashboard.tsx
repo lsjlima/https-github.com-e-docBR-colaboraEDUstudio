@@ -4,6 +4,7 @@ import { Header } from '../Header';
 import { CoordenadorSidebar } from './CoordenadorSidebar';
 import { CoordenadorHome } from './CoordenadorHome';
 import { GerenciarProfessores } from './GerenciarProfessores';
+import { ChatDashboard } from '../chat/ChatDashboard';
 
 
 interface CoordenadorDashboardProps {
@@ -19,7 +20,8 @@ export type CoordenadorView =
   | 'relatorios'
   | 'reunioes'
   | 'configuracoes'
-  | 'meuPerfil';
+  | 'meuPerfil'
+  | 'chat';
 
 const viewTitles: Record<CoordenadorView, string> = {
   departamentos: 'Departamentos',
@@ -30,6 +32,7 @@ const viewTitles: Record<CoordenadorView, string> = {
   reunioes: 'Reuniões',
   configuracoes: 'Configurações',
   meuPerfil: 'Meu Perfil',
+  chat: 'Comunicação',
 };
 
 export const CoordenadorDashboard: React.FC<CoordenadorDashboardProps> = ({ profile, onLogout }) => {
@@ -41,6 +44,8 @@ export const CoordenadorDashboard: React.FC<CoordenadorDashboardProps> = ({ prof
         return <CoordenadorHome />;
       case 'professores':
         return <GerenciarProfessores />;
+      case 'chat':
+        return <ChatDashboard currentUserProfile={profile} />;
       default:
         return (
           <div className="p-8 bg-white rounded-lg shadow animate-fade-in">

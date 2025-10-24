@@ -5,6 +5,7 @@ import { AlunoSidebar } from './AlunoSidebar';
 import { MinhasAulas } from './MinhasAulas';
 import { AlunoNotas } from './AlunoNotas';
 import { AlunoPresenca } from './AlunoPresenca';
+import { ChatDashboard } from '../chat/ChatDashboard';
 
 interface AlunoDashboardProps {
   profile: UserProfile;
@@ -19,7 +20,8 @@ export type AlunoView =
   | 'calendario'
   | 'biblioteca'
   | 'mensagens'
-  | 'meuPerfil';
+  | 'meuPerfil'
+  | 'chat';
 
 const viewTitles: Record<AlunoView, string> = {
   minhasAulas: 'Minhas Aulas',
@@ -30,6 +32,7 @@ const viewTitles: Record<AlunoView, string> = {
   biblioteca: 'Biblioteca',
   mensagens: 'Mensagens',
   meuPerfil: 'Meu Perfil',
+  chat: 'Mensagens',
 };
 
 export const AlunoDashboard: React.FC<AlunoDashboardProps> = ({ profile, onLogout }) => {
@@ -43,6 +46,8 @@ export const AlunoDashboard: React.FC<AlunoDashboardProps> = ({ profile, onLogou
         return <AlunoNotas />;
       case 'presenca':
         return <AlunoPresenca />;
+      case 'chat':
+        return <ChatDashboard currentUserProfile={profile} />;
       default:
         return (
           <div className="p-8 bg-white rounded-lg shadow animate-fade-in">

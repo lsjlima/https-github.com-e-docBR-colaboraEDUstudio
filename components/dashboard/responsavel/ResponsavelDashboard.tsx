@@ -6,6 +6,7 @@ import { MeusFilhos } from './MeusFilhos';
 import { Boletins } from './Boletins';
 import { Presenca } from './Presenca';
 import { Pagamentos } from './Pagamentos';
+import { ChatDashboard } from '../chat/ChatDashboard';
 
 interface ResponsavelDashboardProps {
   profile: UserProfile;
@@ -16,7 +17,7 @@ export type ResponsavelView =
   | 'meusFilhos'
   | 'boletins'
   | 'presenca'
-  | 'comunicados'
+  | 'chat'
   | 'pagamentos'
   | 'reunioes'
   | 'meuPerfil';
@@ -25,7 +26,7 @@ const viewTitles: Record<ResponsavelView, string> = {
   meusFilhos: 'Meus Filhos',
   boletins: 'Boletins',
   presenca: 'Presença',
-  comunicados: 'Comunicados',
+  chat: 'Comunicação',
   pagamentos: 'Pagamentos',
   reunioes: 'Reuniões',
   meuPerfil: 'Meu Perfil',
@@ -44,6 +45,8 @@ export const ResponsavelDashboard: React.FC<ResponsavelDashboardProps> = ({ prof
         return <Presenca />;
       case 'pagamentos':
         return <Pagamentos />;
+      case 'chat':
+        return <ChatDashboard currentUserProfile={profile} />;
       default:
         return (
           <div className="p-8 bg-white rounded-lg shadow animate-fade-in">

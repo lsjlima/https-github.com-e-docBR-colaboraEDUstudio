@@ -5,6 +5,7 @@ import { OrientadorSidebar } from './OrientadorSidebar';
 import { OrientadorHome } from './OrientadorHome';
 import { GerenciarAlunos } from './GerenciarAlunos';
 import { Ocorrencias } from './Ocorrencias';
+import { ChatDashboard } from '../chat/ChatDashboard';
 
 interface OrientadorDashboardProps {
   profile: UserProfile;
@@ -22,7 +23,8 @@ export type OrientadorView =
   | 'perfil'
   | 'configuracoes'
   | 'notificacoes'
-  | 'ajuda';
+  | 'ajuda'
+  | 'chat';
 
 const viewTitles: Record<OrientadorView, string> = {
   dashboard: 'Dashboard',
@@ -36,6 +38,7 @@ const viewTitles: Record<OrientadorView, string> = {
   configuracoes: 'Configurações do Sistema',
   notificacoes: 'Central de Notificações',
   ajuda: 'Suporte e Ajuda',
+  chat: 'Comunicação',
 };
 
 export const OrientadorDashboard: React.FC<OrientadorDashboardProps> = ({ profile, onLogout }) => {
@@ -49,6 +52,8 @@ export const OrientadorDashboard: React.FC<OrientadorDashboardProps> = ({ profil
         return <GerenciarAlunos />;
       case 'ocorrencias':
         return <Ocorrencias />;
+      case 'chat':
+        return <ChatDashboard currentUserProfile={profile} />;
       default:
         return (
           <div className="p-8 bg-white rounded-lg shadow animate-fade-in">

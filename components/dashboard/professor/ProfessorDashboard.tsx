@@ -4,6 +4,7 @@ import { Header } from '../Header';
 import { ProfessorSidebar } from './ProfessorSidebar';
 import { MinhasTurmas } from './MinhasTurmas';
 import { Presenca } from './Presenca';
+import { ChatDashboard } from '../chat/ChatDashboard';
 
 interface ProfessorDashboardProps {
   profile: UserProfile;
@@ -20,8 +21,8 @@ export type ProfessorView =
   | 'presenca'
   | 'diarioDeClasse'
   | 'relatorios'
-  | 'comunicacao'
-  | 'meuPerfil';
+  | 'meuPerfil'
+  | 'chat';
 
 const viewTitles: Record<ProfessorView, string> = {
   minhasTurmas: 'Minhas Turmas',
@@ -33,8 +34,8 @@ const viewTitles: Record<ProfessorView, string> = {
   presenca: 'Presença',
   diarioDeClasse: 'Diário de Classe',
   relatorios: 'Relatórios',
-  comunicacao: 'Comunicação',
   meuPerfil: 'Meu Perfil',
+  chat: 'Comunicação',
 };
 
 export const ProfessorDashboard: React.FC<ProfessorDashboardProps> = ({ profile, onLogout }) => {
@@ -46,6 +47,8 @@ export const ProfessorDashboard: React.FC<ProfessorDashboardProps> = ({ profile,
         return <MinhasTurmas />;
       case 'presenca':
         return <Presenca />;
+      case 'chat':
+        return <ChatDashboard currentUserProfile={profile} />;
       default:
         return (
           <div className="p-8 bg-white rounded-lg shadow animate-fade-in">

@@ -7,6 +7,7 @@ import { UserManagement } from './UserManagement';
 import { Institutions } from './Institutions';
 import { PDFProcessor } from './PDFProcessor';
 import { SystemSettings } from './SystemSettings';
+import { ChatDashboard } from './chat/ChatDashboard';
 
 interface AdminDashboardProps {
   profile: UserProfile;
@@ -28,7 +29,8 @@ export type AdminView =
   | 'rulesAndPolicies'
   | 'academicParameters'
   | 'integrations'
-  | 'myProfile';
+  | 'myProfile'
+  | 'chat';
 
 
 const viewTitles: Record<AdminView, string> = {
@@ -47,6 +49,7 @@ const viewTitles: Record<AdminView, string> = {
   academicParameters: 'Parâmetros Acadêmicos',
   integrations: 'Integrações',
   myProfile: 'Meu Perfil',
+  chat: 'Comunicação',
 };
 
 export const AdminDashboard: React.FC<AdminDashboardProps> = ({ profile, onLogout }) => {
@@ -64,6 +67,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ profile, onLogou
         return <PDFProcessor />;
       case 'systemSettings':
         return <SystemSettings />;
+      case 'chat':
+        return <ChatDashboard currentUserProfile={profile} />;
       default:
         return (
           <div className="p-8 bg-white rounded-lg shadow animate-fade-in">

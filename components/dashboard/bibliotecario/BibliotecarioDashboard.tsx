@@ -4,6 +4,7 @@ import { Header } from '../Header';
 import { BibliotecarioSidebar } from './BibliotecarioSidebar';
 import { BibliotecarioHome } from './BibliotecarioHome';
 import { GerenciarAcervo } from './GerenciarAcervo';
+import { ChatDashboard } from '../chat/ChatDashboard';
 
 interface BibliotecarioDashboardProps {
   profile: UserProfile;
@@ -17,7 +18,8 @@ export type BibliotecarioView =
   | 'reservas'
   | 'relatorios'
   | 'configuracoes'
-  | 'meuPerfil';
+  | 'meuPerfil'
+  | 'chat';
 
 const viewTitles: Record<BibliotecarioView, string> = {
   emprestimos: 'Empréstimos',
@@ -27,6 +29,7 @@ const viewTitles: Record<BibliotecarioView, string> = {
   relatorios: 'Relatórios',
   configuracoes: 'Configurações',
   meuPerfil: 'Meu Perfil',
+  chat: 'Comunicação',
 };
 
 export const BibliotecarioDashboard: React.FC<BibliotecarioDashboardProps> = ({ profile, onLogout }) => {
@@ -38,6 +41,8 @@ export const BibliotecarioDashboard: React.FC<BibliotecarioDashboardProps> = ({ 
         return <BibliotecarioHome />;
       case 'acervo':
         return <GerenciarAcervo />;
+      case 'chat':
+        return <ChatDashboard currentUserProfile={profile} />;
       default:
         return (
           <div className="p-8 bg-white rounded-lg shadow animate-fade-in">
